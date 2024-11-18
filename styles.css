@@ -1,0 +1,157 @@
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #4a148c, #7b1fa2, #ab47bc);
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Container */
+.container {
+    background: #ffffff;
+    color: #4a148c;
+    width: 90%;
+    max-width: 400px;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    animation: fadeIn 0.8s ease-out both;
+}
+
+/* Heading */
+.container h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+/* Input Fields */
+.input-group input {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    color: #4a148c;
+}
+
+.input-group input:focus {
+    border-color: #7b1fa2;
+    outline: none;
+    box-shadow: 0 0 10px rgba(123, 31, 162, 0.5);
+}
+
+/* Buttons */
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+button {
+    background: #7b1fa2;
+    color: #ffffff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    background: #4a148c;
+}
+
+/* Back to Home Button */
+.back-home {
+    margin-top: 20px;
+    font-size: 14px;
+    background: none;
+    color: #4a148c;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.back-home:hover {
+    color: #7b1fa2;
+    text-decoration: none;
+}
+
+/* Task Container */
+#tasksContainer {
+    margin-top: 10px;
+    text-align: left;
+}
+
+.task-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f8f0fa;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.task-row input {
+    width: 55%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-right: 10px;
+    color: #4a148c;
+}
+
+.task-row input:focus {
+    border-color: #7b1fa2;
+    outline: none;
+}
+
+.task-row select {
+    width: 30%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    color: #4a148c;
+}
+
+.task-row button {
+    background: #ff5e6c;
+    color: #ffffff;
+    font-size: 14px;
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.task-row button:hover {
+    background: #ff758c;
+}
+
+/* Subtle Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Details - View</title>
+    <link rel="stylesheet" href="style1.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* Basic container styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #4a148c, #7b1fa2, #ab47bc);
+        }
+
+        header {
+            background-color: #fff;
+            color: #7a37b4;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Main content styling */
+        .project-detail-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin: 20px auto;
+            max-width: 900px;
+        }
+
+        .project-detail-container h3 {
+            font-size: 2rem;
+            color: #3b3b3b;
+            margin-bottom: 10px;
+        }
+
+        .project-detail-container p {
+            font-size: 1.1rem;
+            color: #656464;
+            margin: 5px 0;
+        }
+
+        h4 {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            color: #7a37b4;
+        }
+
+        .summary {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Task list styles */
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            
+        }
+
+        .task-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            
+        }
+
+        .task-item.completed {
+            text-decoration: line-through;
+            color: #3d6284;
+        }
+
+        /* Button styles */
+        .btn {
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            background-color: #ffffff;
+            color: #f2462c;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #929293;
+        }
+
+        .back-home {
+            background-color: #dadadb;
+            margin-left: 31%;
+        }
+
+        .back-home:hover {
+            background-color: #919292;
+        }
+
+        .download-btn {
+            background-color: #f2462c;
+            color: #fff;
+        }
+
+        .download-btn:hover {
+            background-color: #c82333;
+        }
+
+        /* Responsive Design for Mobile */
+        @media (max-width: 600px) {
+            .project-detail-container {
+                padding: 20px;
+                margin: 10px;
+                
+            }
+
+            .task-list {
+                gap: 10px;
+                
+            }
+
+            .btn {
+                font-size: 1rem;
+                padding: 8px 16px;
+                
+            }
+        }
+        .pac-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .pac-container input {
+            padding: 10px;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .pac-container button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #700ab4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .pac-container button:hover {
+            background-color: #5b0085;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Project Details</h1>
+    </header>
+
+    <main>
+        <div id="project-details" class="project-detail-container">
+            <!-- Project details will be dynamically inserted here -->
+        </div>
+
+        <button onclick="window.location.href='index.html'" class="btn back-home">
+            <i class="fas fa-home"></i> <!-- Home icon -->
+        </button>
+
+        <button id="download-md" class="btn download-btn">Download as Markdown</button>
+
+        <!-- New button to upload to Gist -->
+        <button id="upload-gist" class="btn">Upload to Gist</button>
+    </main>
+
+    <!-- PAC Entry Form -->
+    <div id="pac-form" class="pac-container">
+        <h3>Enter GitHub Personal Access Token</h3>
+        <input type="text" id="pac-input" placeholder="Enter your GitHub Token">
+        <button id="submit-pac">Submit</button>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 Todo Manager. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let projectData = JSON.parse(localStorage.getItem("selectedProject"));
+        let githubToken = '';  // Placeholder for the GitHub PAC
+
+        // Show the PAC form
+        function showPACForm() {
+            document.getElementById('pac-form').style.display = 'block';
+        }
+
+        // Hide the PAC form
+        function hidePACForm() {
+            document.getElementById('pac-form').style.display = 'none';
+        }
+
+        // Function to render project details
+        function renderProjectDetails() {
+            if (!projectData) {
+                alert("No project data found.");
+                window.location.href = "index.html";
+                return;
+            }
+
+            const totalTasks = projectData.todos.length;
+            const completedTasksCount = projectData.todos.filter(task => task.status).length;
+
+            const projectDetailsDiv = document.getElementById("project-details");
+            projectDetailsDiv.innerHTML = `
+                <h3>Project Title: ${projectData.title}</h3>
+                <p><strong>Project ID:</strong> ${projectData.id}</p>
+                <p><strong>Created Date:</strong> ${projectData.createdDate}</p>
+                <p><strong>Total Tasks:</strong> ${totalTasks}</p>
+                <div class="summary">
+                    <strong>Summary:</strong> ${completedTasksCount} / ${totalTasks} tasks completed
+                </div>
+                <h4>Completed Tasks</h4>
+                <div class="task-list" id="completed-tasks"></div>
+                <h4>Pending Tasks</h4>
+                <div class="task-list" id="pending-tasks"></div>
+            `;
+
+            const completedTasksDiv = document.getElementById('completed-tasks');
+            const pendingTasksDiv = document.getElementById('pending-tasks');
+
+            projectData.todos.forEach(task => {
+                const taskElement = document.createElement('div');
+                taskElement.classList.add('task-item');
+                taskElement.innerHTML = `
+                    <input type="checkbox" ${task.status ? 'checked' : ''} disabled>
+                    <span class="${task.status ? 'completed' : ''}">
+                        <strong>Description:</strong> ${task.description} <br>
+                        <strong>Created:</strong> ${task.createdDate} <br>
+                        <strong>Updated:</strong> ${task.updatedDate || 'Not updated'}
+                    </span>
+                `;
+
+                if (task.status) {
+                    completedTasksDiv.appendChild(taskElement);
+                } else {
+                    pendingTasksDiv.appendChild(taskElement);
+                }
+            });
+        }
+
+        // Function to download project details as a Markdown file
+        document.getElementById("download-md").addEventListener("click", function () {
+            if (!projectData) return;
+
+            let markdownContent = generateMarkdownContent();
+            const blob = new Blob([markdownContent], { type: 'text/markdown' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `${projectData.title}_details.md`;
+            link.click();
+        });
+
+        // Function to upload project details to GitHub Gist
+        document.getElementById("upload-gist").addEventListener("click", function () {
+            if (!githubToken) {
+                // Show PAC form if token is not available
+                showPACForm();
+                return;
+            }
+
+            const gistData = {
+                description: `Project Details for ${projectData.title}`,
+                public: true,
+                files: {
+                    [`${projectData.title}_details.md`]: {
+                        content: generateMarkdownContent()
+                    }
+                }
+            };
+
+            // Make the API request to GitHub Gists
+            fetch('https://api.github.com/gists', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `token ${githubToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(gistData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Project uploaded to Gist successfully!');
+                console.log('Gist URL:', data.html_url);
+                window.open(data.html_url, '_blank');
+            })
+            .catch(error => {
+                alert('Error uploading to Gist');
+                console.error('Error:', error);
+            });
+        });
+
+        // Function to submit PAC and close the form
+        document.getElementById('submit-pac').addEventListener('click', function () {
+            githubToken = document.getElementById('pac-input').value.trim();
+            if (githubToken) {
+                alert('Token received! You can now upload your project to Gist.');
+                hidePACForm();  // Hide the PAC form after submission
+            } else {
+                alert('Please enter a valid GitHub Personal Access Token');
+            }
+        });
+
+        // Helper function to generate markdown content
+        function generateMarkdownContent() {
+            let markdownContent = `# ${projectData.title}\n\n`;
+            markdownContent += `**Project ID:** ${projectData.id}\n`;
+            markdownContent += `**Created Date:** ${projectData.createdDate}\n`;
+            markdownContent += `**Total Tasks:** ${projectData.todos.length}\n\n`;
+            markdownContent += `**Summary:** ${projectData.todos.filter(task => task.status).length} / ${projectData.todos.length} tasks completed\n\n`;
+
+            markdownContent += `## Completed Tasks\n`;
+
+            projectData.todos.forEach(task => {
+                if (task.status) {
+                    markdownContent += `\n- **Description:** ${task.description}\n`;
+                    markdownContent += `  - **Created:** ${task.createdDate}\n`;
+                    markdownContent += `  - **Updated:** ${task.updatedDate || 'Not updated'}\n`;
+                }
+            });
+
+            markdownContent += `\n## Pending Tasks\n`;
+
+            projectData.todos.forEach(task => {
+                if (!task.status) {
+                    markdownContent += `\n- **Description:** ${task.description}\n`;
+                    markdownContent += `  - **Created:** ${task.createdDate}\n`;
+                    markdownContent += `  - **Updated:** ${task.updatedDate || 'Not updated'}\n`;
+                }
+            });
+
+            return markdownContent;
+        }
+
+        // Initial render of the project details
+        renderProjectDetails();
+    </script>
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Project</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: rgb(135, 31, 195) ; /* Soft purple-grey */
+            color: #4b0082; /* Deep purple for text */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h4, h5 {
+            color: #4b0082; /* Deep purple */
+            text-align: center;
+        }
+
+        /* Input and Buttons */
+        .editable-container input,
+        .editable-container textarea,
+        input.editable {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            margin: 10px; /* Add spacing between buttons */
+            height: 40px;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .btn.save-btn {
+            background-color: #6a0dad; /* Rich purple */
+            float: right;
+        }
+
+        .btn.save-btn:hover {
+            background-color: #580b9e; /* Darker purple */
+        }
+
+        .btn.danger {
+            background-color: #cb0202; /* Bold red */
+            float: right;
+        }
+
+        .btn.danger:hover {
+            background-color: #8a0000; /* Darker red */
+        }
+
+        .btn.back-home {
+            background-color: #6c757d; 
+            /* Neutral grey */
+        }
+
+        .btn.back-home:hover {
+            background-color: #565e64; /* Darker grey */
+        }
+
+        #add-task {
+            background-color: #cb0202; /* Deep purple accent */
+        }
+
+        #add-task:hover {
+            background-color: #8a0000; /* Darker purple */
+        }
+
+        /* Task List Styles */
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .task-list li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #f2ebff; /* Light purple-grey */
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .task-status {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        input.task-desc {
+            flex: 1;
+            margin: 0 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            color: #4b0082; /* Deep purple */
+        }
+
+        button.danger {
+            background-color: #b30000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        button.danger:hover {
+            background-color: #8a0000;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px;
+                padding: 15px;
+            }
+
+            .btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+
+            .task-list li {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Project</h1>
+        <div class="project-info">
+            <p><strong>Title:</strong> <input type="text" id="project-title" class="editable" /></p>
+            <p id="project-id"></p>
+            <p id="project-created-date"></p>
+        </div>
+       
+
+        <h4>Total Tasks: <span id="total-tasks"></span></h4>
+
+        <div class="tasks-section">
+            <h5>Tasks</h5>
+            <ul id="task-list" class="task-list"></ul>
+            <button id="add-task" class="btn">Add Task</button>
+        </div>
+        <button id="save-project" class="btn save-btn" >Save Project</button>
+        <button id="delete-project" class="btn danger">
+            <i class="fas fa-trash"></i> 
+        </button>
+        <button onclick="window.location.href='index.html'" class="btn back-home">← Back to Home</button>
+    </div>
+
+    <script>
+        let projectData = JSON.parse(localStorage.getItem("selectedProject"));
+        
+        // Render project details
+        function renderProject() {
+    // Ensure projectData and todos are defined
+    if (!projectData || !Array.isArray(projectData.todos)) {
+        alert("Invalid project data or todos array is missing.");
+        return; // Exit early if data is invalid
+    }
+
+    // Render project details
+    document.getElementById("project-title").value = projectData.title;
+    document.getElementById("project-id").textContent = `ID: ${projectData.id}`;
+    document.getElementById("project-created-date").textContent = `Created Date: ${projectData.createdDate }`;
+    document.getElementById("total-tasks").textContent = projectData.todos.length;
+
+    // Display tasks
+    const taskList = document.getElementById("task-list");
+    taskList.innerHTML = ""; // Clear existing tasks
+    projectData.todos.forEach((task, index) => {
+        const taskItem = document.createElement("li");
+        taskItem.innerHTML = `
+            <input type="checkbox" class="task-status" ${task.status ? "checked" : ""} 
+                onchange="toggleTaskStatus(${index})">
+            <input type="text" class="editable task-desc" value="${task.description}" 
+                onchange="updateTaskDescription(${index}, this.value)">
+            <span><strong>Created:</strong> ${task.createdDate}</span>
+            <span><strong>Updated:</strong> ${task.updatedDate || "Not updated"}</span>
+            <button class="btn danger" onclick="deleteTask(${index})"><i class="fas fa-trash-alt"></i></button>
+        `;
+        taskList.appendChild(taskItem);
+    });
+}
+
+
+
+
+
+        // Save updated project details
+        document.getElementById("save-project").addEventListener("click", () => {
+            projectData.title = document.getElementById("project-title").value.trim();
+            localStorage.setItem("selectedProject", JSON.stringify(projectData));
+            updateLocalStorageProjects(projectData);
+            alert("Project updated successfully!");
+        });
+
+        // Delete project
+        document.getElementById("delete-project").addEventListener("click", () => {
+            if (confirm("Are you sure you want to delete this project?")) {
+                const allProjects = JSON.parse(localStorage.getItem("projects")) || [];
+                const updatedProjects = allProjects.filter(p => p.id !== projectData.id);
+                localStorage.setItem("projects", JSON.stringify(updatedProjects));
+                localStorage.removeItem("selectedProject");
+                alert("Project deleted successfully!");
+                window.location.href = "index.html";
+            }
+        });
+
+        // Toggle task status
+        function toggleTaskStatus(index) {
+            const task = projectData.todos[index];
+            task.status = !task.status;
+            task.updatedDate = new Date().toLocaleString();
+            saveChanges();
+        }
+
+        // Update task description
+        function updateTaskDescription(index, description) {
+            const task = projectData.todos[index];
+            task.description = description.trim();
+            task.updatedDate = new Date().toLocaleString();
+            saveChanges();
+        }
+
+        // Add a new task
+        document.getElementById("add-task").addEventListener("click", () => {
+    // Ensure that todos is always an array
+    if (!Array.isArray(projectData.todos)) {
+        projectData.todos = []; // Initialize todos as an empty array if not already
+    }
+
+    const newTask = {
+        description: "New Task", // Default description
+        status: false,
+        createdDate: new Date().toLocaleString(),
+        updatedDate: null
+    };
+
+    // Push the new task to the todos array
+    projectData.todos.push(newTask);
+    saveChanges();
+});
+
+
+        // Delete a task
+        function deleteTask(index) {
+            if (confirm("Are you sure you want to delete this task?")) {
+                projectData.todos.splice(index, 1);
+                saveChanges();
+            }
+        }
+
+        // Save changes to localStorage
+        function saveChanges() {
+            localStorage.setItem("selectedProject", JSON.stringify(projectData));
+            updateLocalStorageProjects(projectData);
+            renderProject();
+        }
+
+        // Update the main projects list in localStorage
+        function updateLocalStorageProjects(updatedProject) {
+            const allProjects = JSON.parse(localStorage.getItem("projects")) || [];
+            const projectIndex = allProjects.findIndex(p => p.id === updatedProject.id);
+            if (projectIndex !== -1) {
+                allProjects[projectIndex] = updatedProject;
+                localStorage.setItem("projects", JSON.stringify(allProjects));
+            }
+        }
+
+        // Initial render
+        renderProject();
+    </script>
+</body>
+</html>

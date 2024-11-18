@@ -1,0 +1,157 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #4a148c, #7b1fa2, #ab47bc); /* Light off-white background as fallback */
+    ;/* Add your image URL here */
+    background-size: cover;  /* Ensures the image covers the whole page */
+    background-position: center; /* Centers the background image */
+    background-attachment: fixed; /* Keeps the background fixed when scrolling */
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+header h1 {
+    font-size: 3.5rem;
+    color: #f0eef2; /* Purple shade */
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: serif;
+}
+
+header p {
+    font-size: 1.2rem;
+    color: #c237b4;
+    margin-top: 10px;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.card-container {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.card {
+    background-color: #fff;
+    width: 280px;
+    height: 280px;
+    border-radius: 70px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 25px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+    background-size: cover; /* Ensures the image covers the whole card */
+    background-position: center; /* Centers the background image */
+    text-align: left;
+}
+
+.card h2 {
+    color: #c7c5c5; /* Purple shade */
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+    font-family:serif;
+}
+
+.card button {
+    background-color: #f5284a;
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+    width: 80%;
+    margin-left:10.5%;
+}
+
+.card button:hover {
+    background-color: #c81b77; /* Slightly darker purple */
+}
+
+.card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(155, 77, 202, 0.2), rgba(255, 120, 180, 0.1));
+    z-index: -1;
+}
+
+footer {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 1rem;
+    color: #777;
+}
+
+footer p {
+    color: #d6d6d6; /* Matching footer with primary theme */
+}
+
+@media (max-width: 768px) {
+    .card-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* Remove underlines from all links */
+a {
+    text-decoration: none;  /* Removes underline */
+    color: inherit;         /* Inherits color from the parent element (e.g., white text) */
+}
+
+/* Additional styling for buttons (optional) */
+button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
