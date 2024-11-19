@@ -72,7 +72,6 @@ loginForm.addEventListener('submit', (e) => {
     const password = document.getElementById('loginPassword').value;
 
     if (mockDatabase[username] && mockDatabase[username].password === password) {
-        alert('Login successful!');
         loginForm.reset();
         loginErrorMessage.textContent = '';
         window.location.href = 'home.html';
