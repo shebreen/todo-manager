@@ -1,11 +1,10 @@
-/* General Reset */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Body Styling */
 body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, #a777e3, #8e46e7);
@@ -17,7 +16,6 @@ body {
     margin: 0;
 }
 
-/* Auth Container */
 .auth-container {
     width: 100%;
     max-width: 400px;
@@ -33,13 +31,11 @@ body {
     transform: translateY(-5px);
 }
 
-/* Headings */
 h1 {
     margin-bottom: 20px;
     color: #4b0082;
 }
 
-/* Form Groups */
 .form-group {
     margin-bottom: 20px;
     text-align: left;
@@ -67,7 +63,6 @@ input:focus {
     background: #f4f8ff;
 }
 
-/* Buttons */
 .btn {
     width: 100%;
     padding: 12px;
@@ -85,13 +80,11 @@ input:focus {
     background: linear-gradient(90deg, #a777e3, #6e8efb);
 }
 
-/* Small Text (Password Criteria) */
 small {
     font-size: 14px;
     color: #666;
 }
 
-/* Switch Form Text */
 .switch-form {
     margin-top: 20px;
     font-size: 14px;
@@ -108,14 +101,12 @@ small {
     color: #a777e3;
 }
 
-/* Error Message */
 .error-message {
     color: red;
     font-size: 14px;
     margin-top: 10px;
 }
 
-/* Responsive Design */
 @media screen and (max-width: 480px) {
     .auth-container {
         padding: 20px;
