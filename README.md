@@ -8,6 +8,7 @@
 - can download the project as markdown and upload it to gist using PAC.
 
 ## Live Demo
+https://shebreen.github.io/todo-manager/
 
 ## Set up
 
