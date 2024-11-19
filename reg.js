@@ -1,7 +1,4 @@
-// Mock database for demonstration
 const mockDatabase = {};
-
-// Elements
 const loginFormWrapper = document.getElementById('loginFormWrapper');
 const signupFormWrapper = document.getElementById('signupFormWrapper');
 const loginErrorMessage = document.getElementById('loginErrorMessage');
@@ -11,7 +8,6 @@ const showLoginForm = document.getElementById('showLoginForm');
 const loginForm = document.getElementById('loginForm');
 const signupForm = document.getElementById('signupForm');
 
-// Switch between forms
 showSignupForm.addEventListener('click', () => {
     loginFormWrapper.style.display = 'none';
     signupFormWrapper.style.display = 'block';
@@ -24,19 +20,19 @@ showLoginForm.addEventListener('click', () => {
     signupErrorMessage.textContent = '';
 });
 
-// Password validation criteria
+// password validation
 const isPasswordValid = (password) => {
     const criteria = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return criteria.test(password);
 };
 
-// Email validation
+// email validation
 const isEmailValid = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 };
 
-// Signup form submission
+// submit signup form 
 signupForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -60,7 +56,7 @@ signupForm.addEventListener('submit', (e) => {
         return;
     }
 
-    // Save the user in the mock database
+    // save user in the mock database
     mockDatabase[username] = { email, password };
     alert('Signup successful! You can now login.');
     signupForm.reset();
@@ -68,7 +64,7 @@ signupForm.addEventListener('submit', (e) => {
     loginFormWrapper.style.display = 'block';
 });
 
-// Login form submission
+// submit login form 
 loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -79,7 +75,7 @@ loginForm.addEventListener('submit', (e) => {
         alert('Login successful!');
         loginForm.reset();
         loginErrorMessage.textContent = '';
-        window.location.href = 'index.html';
+        window.location.href = 'home.html';
     } else {
         loginErrorMessage.textContent = 'Invalid username or password.';
     }
