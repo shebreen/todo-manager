@@ -301,7 +301,6 @@
             })
             .then(response => response.json())
             .then(data => {
-                alert('Project uploaded to Gist successfully!');
                 console.log('Gist URL:', data.html_url);
                 window.open(data.html_url, '_blank');
             })
