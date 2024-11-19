@@ -1,4 +1,3 @@
-/* General Styles */
 body {
     margin: 0;
     padding: 0;
@@ -11,7 +10,6 @@ body {
     height: 100vh;
 }
 
-/* Container */
 .container {
     background: #ffffff;
     color: #4a148c;
@@ -24,13 +22,11 @@ body {
     animation: fadeIn 0.8s ease-out both;
 }
 
-/* Heading */
 .container h1 {
     font-size: 2rem;
     margin-bottom: 20px;
 }
 
-/* Input Fields */
 .input-group input {
     width: 100%;
     padding: 15px;
@@ -49,7 +45,6 @@ body {
     box-shadow: 0 0 10px rgba(123, 31, 162, 0.5);
 }
 
-/* Buttons */
 .buttons {
     display: flex;
     justify-content: space-between;
@@ -73,7 +68,6 @@ button:hover {
     background: #4a148c;
 }
 
-/* Back to Home Button */
 .back-home {
     margin-top: 20px;
     font-size: 14px;
@@ -88,7 +82,6 @@ button:hover {
     text-decoration: none;
 }
 
-/* Task Container */
 #tasksContainer {
     margin-top: 10px;
     text-align: left;
@@ -144,7 +137,6 @@ button:hover {
     background: #ff758c;
 }
 
-/* Subtle Animation */
 @keyframes fadeIn {
     from {
         opacity: 0;
