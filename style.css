@@ -6,11 +6,10 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #4a148c, #7b1fa2, #ab47bc); /* Light off-white background as fallback */
-    ;/* Add your image URL here */
-    background-size: cover;  /* Ensures the image covers the whole page */
-    background-position: center; /* Centers the background image */
-    background-attachment: fixed; /* Keeps the background fixed when scrolling */
+    background: linear-gradient(135deg, #4a148c, #7b1fa2, #ab47bc); 
+    background-size: cover; 
+    background-position: center; 
+    background-attachment: fixed; 
     color: #333;
     display: flex;
     flex-direction: column;
@@ -26,7 +25,7 @@ header {
 
 header h1 {
     font-size: 3.5rem;
-    color: #f0eef2; /* Purple shade */
+    color: #f0eef2; 
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -70,13 +69,13 @@ main {
     position: relative;
     overflow: hidden;
     box-sizing: border-box;
-    background-size: cover; /* Ensures the image covers the whole card */
-    background-position: center; /* Centers the background image */
+    background-size: cover; 
+    background-position: center; 
     text-align: left;
 }
 
 .card h2 {
-    color: #c7c5c5; /* Purple shade */
+    color: #c7c5c5; 
     font-size: 1.4rem;
     margin-bottom: 20px;
     font-weight: 600;
@@ -98,7 +97,7 @@ main {
 }
 
 .card button:hover {
-    background-color: #c81b77; /* Slightly darker purple */
+    background-color: #c81b77; 
 }
 
 .card:hover {
@@ -125,7 +124,7 @@ footer {
 }
 
 footer p {
-    color: #d6d6d6; /* Matching footer with primary theme */
+    color: #d6d6d6; 
 }
 
 @media (max-width: 768px) {
@@ -135,13 +134,11 @@ footer p {
     }
 }
 
-/* Remove underlines from all links */
 a {
-    text-decoration: none;  /* Removes underline */
-    color: inherit;         /* Inherits color from the parent element (e.g., white text) */
+    text-decoration: none;  
+    color: inherit;         
 }
 
-/* Additional styling for buttons (optional) */
 button {
     background-color: #007BFF;
     color: white;
